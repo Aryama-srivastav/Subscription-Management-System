@@ -35,6 +35,11 @@ async function mount(id) {
       <tbody>${lines.map(l=>`<tr><td>${l.products?.name||'—'}</td><td>${l.qty}</td><td>${money(l.unit_price)}</td><td>${l.tax_rate}</td><td>${money(l.tax_amount)}</td><td>${money(l.line_total)}</td></tr>`).join('')}</tbody></table></div>
     </div>
     <div class="card" style="margin-top:16px">
+      <h2>Discounts</h2>
+      <div class="table-wrap"><table><thead><tr><th>Discount</th><th>Amount</th></tr></thead>
+      <tbody>${(inv.discounts||[]).map(d=>`<tr><td>${d.discounts?.name||'—'}</td><td>${money(d.amount)}</td></tr>`).join('') || '<tr><td colspan="2" class="muted">No discounts applied.</td></tr>'}</tbody></table></div>
+    </div>
+    <div class="card" style="margin-top:16px">
       <h2>Payments</h2>
       <div class="table-wrap"><table><thead><tr><th>Date</th><th>Method</th><th>Amount</th><th>Note</th></tr></thead>
       <tbody>${payments.map(p=>`<tr><td>${p.paid_on}</td><td>${p.method}</td><td>${money(p.amount)}</td><td>${p.note||''}</td></tr>`).join('') || '<tr><td colspan="4" class="muted">No payments yet.</td></tr>'}</tbody></table></div>

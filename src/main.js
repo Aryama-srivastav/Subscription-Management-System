@@ -38,6 +38,13 @@ register('/dashboard', () => guarded(async () => {
 register('/products', () => guarded(async () => {
   const m = await import('./pages/products.js'); return m.render();
 }));
+
+register('/quotations', () => guarded(async () => {
+  const m = await import('./pages/quotations.js'); return m.render();
+}));
+register('/discounts', () => guarded(async () => {
+  const m = await import('./pages/discounts.js'); return m.render();
+}));
 register('/products/:id', (p) => guarded(async () => {
   const m = await import('./pages/productDetail.js'); return m.render(p);
 }));

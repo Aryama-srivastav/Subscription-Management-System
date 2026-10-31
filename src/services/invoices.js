@@ -15,6 +15,8 @@ export const Invoices = {
     data.lines = lines || [];
     const { data: pays } = await supabase.from('payments').select('*').eq('invoice_id', id).order('paid_on',{ascending:false});
     data.payments = pays || [];
+    const { data: discs } = await supabase.from('invoice_discounts').select('*, discounts(name,type,value)').eq('invoice_id', id);
+    data.discounts = discs || [];
     return data;
   },
   async create(payload) { const { data, error } = await supabase.from('invoices').insert(payload).select().single(); if (error) throw error; return data; },

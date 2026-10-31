@@ -23,11 +23,13 @@ export function renderShell(contentHtml) {
   const links = [
     { path: '/dashboard', label: 'Dashboard', show: true },
     { path: '/products', label: 'Products', show: isStaff() },
+    { path: '/quotations', label: 'Quotations', show: isStaff() },
     { path: '/plans', label: 'Plans', show: isStaff() },
     { path: '/subscriptions', label: 'Subscriptions', show: true },
     { path: '/invoices', label: 'Invoices', show: true },
     { path: '/payments', label: 'Payments', show: isStaff() },
     { path: '/customers', label: 'Customers', show: isStaff() },
+    { path: '/discounts', label: 'Discounts', show: isAdmin() },
     { path: '/settings', label: 'Settings', show: isAdmin() },
   ].filter(l => l.show);
 
