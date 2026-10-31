@@ -1,2 +1,15 @@
 # Subscription-Management-System
-one unified software platform that runs the full life of a subscription business, from setting up products and plans to sending invoices, collecting payments and reporting revenue.
+
+This repository now includes a minimal Python subscription platform that covers the full core lifecycle of a recurring-revenue business:
+
+- Product and plan setup
+- Customer subscription creation and cancellation
+- Invoice generation for active subscriptions
+- Payment collection against invoices
+- Revenue reporting (invoiced, collected, and outstanding totals)
+
+## Run tests
+
+```bash
+python -m unittest discover -s tests -v
+```
