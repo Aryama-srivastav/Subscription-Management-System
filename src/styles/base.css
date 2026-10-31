@@ -24,7 +24,7 @@ input:focus, select:focus, textarea:focus { outline: none; border-color: var(--p
   background: var(--surface-2); color: var(--text); cursor: pointer; font-size: 13px; font-weight: 500;
 }
 .btn:hover { background: var(--surface); }
-.btn-primary { background: var(--primary); border-color: var(--primary); color: #fff; }
+.btn-primary { background: var(--primary); border-color: var(--primary); color: #1a1a1a; }
 .btn-primary:hover { background: var(--primary-2); }
 .btn-danger { background: var(--danger); border-color: var(--danger); color: #fff; }
 .btn-ghost { background: transparent; }

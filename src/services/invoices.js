@@ -34,16 +34,15 @@ export const Payments = {
 };
 export const DashboardSvc = {
   async stats() {
-    const [subs, invs] = await Promise.all([
-      supabase.from('subscriptions').select('id', { count:'exact', head:true }).eq('status','active'),
-      supabase.from('invoices').select('id,status,total,amount_paid,balance,due_date'),
-    ]);
-    const activeSubs = subs.count ?? 0;
-    const invoices = invs.data || [];
-    const totalInvoiced = invoices.reduce((s,i)=>s+Number(i.total||0),0);
-    const totalPaid = invoices.reduce((s,i)=>s+Number(i.amount_paid||0),0);
-    const outstanding = invoices.reduce((s,i)=>s+Number(i.balance||0),0);
-    const overdue = invoices.filter(i=> i.status!=='paid' && i.status!=='cancelled' && i.due_date && new Date(i.due_date)<new Date()).length;
-    return { activeSubs, totalInvoiced, totalPaid, outstanding, overdue, invoiceCount: invoices.length };
+    const { data, error } = await supabase.rpc('get_dashboard_stats');
+    if (error) throw error;
+    return {
+      activeSubs: Number(data.activeSubs || 0),
+      totalInvoiced: Number(data.totalInvoiced || 0),
+      totalPaid: Number(data.totalPaid || 0),
+      outstanding: Number(data.outstanding || 0),
+      overdue: Number(data.overdue || 0),
+      invoiceCount: Number(data.invoiceCount || 0),
+    };
   }
 };

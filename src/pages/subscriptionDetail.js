@@ -4,7 +4,7 @@ import { Invoices } from '../services/invoices.js';
 import { money } from '../utils/money.js';
 import { subBadge, canTransitionSub } from '../utils/status.js';
 import { toast } from '../ui.js';
-import { isAdmin, isStaff } from '../layout/shell.js';
+import { isAdmin, isStaff, isCustomer } from '../layout/shell.js';
 
 export function render(params) {
   const html = `<div class="page"><div id="content"><div class="spinner"></div></div></div>`;
@@ -47,6 +47,7 @@ async function mount(id) {
     <div class="row" style="margin-top:16px">
       ${isStaff() ? statusBtns : ''}
       ${isStaff() ? '<button class="btn btn-primary" id="invBtn">Generate invoice</button>' : ''}
+      ${isCustomer() && sub.status==='active' && (sub.plans?.allow_early_close) ? '<button class="btn btn-danger" id="custCloseBtn">Cancel subscription</button>' : ''}
       ${isAdmin() ? '<button class="btn btn-danger" id="delBtn">Delete</button>' : ''}
     </div>
     <div id="err" class="error-text"></div>
@@ -124,5 +125,14 @@ async function mount(id) {
   if (delBtn) delBtn.onclick = async () => {
     if (!confirm('Delete subscription?')) return;
     await Subscriptions.remove(id); toast('Deleted'); location.hash = '#/subscriptions';
+  };
+
+  const custCloseBtn = document.getElementById('custCloseBtn');
+  if (custCloseBtn) custCloseBtn.onclick = async () => {
+    if (!confirm('Cancel this subscription?')) return;
+    try {
+      await Subscriptions.update(id, { status: 'closed' });
+      toast('Subscription cancelled'); mount(id);
+    } catch (e) { document.getElementById('err').textContent = e.message; }
   };
 }

@@ -37,7 +37,8 @@ function mount() {
     });
     renderPagination(document.getElementById('pager'), { page, pageSize, total, onPage: (p)=>{ page=p; reload(); } });
   };
-  document.getElementById('search').addEventListener('input', () => { page=1; reload(); });
+  let searchTimer;
+  document.getElementById('search').addEventListener('input', () => { clearTimeout(searchTimer); searchTimer = setTimeout(()=>{ page=1; reload(); }, 300); });
   if (isAdmin()) document.getElementById('newBtn').onclick = () => openForm(null, reload);
   reload();
 }

@@ -1,6 +1,6 @@
 import { supabase } from './supabaseClient.js';
 import { getSession, getProfile, onAuthChange } from './auth/session.js';
-import { initShell, mountShell, isStaff, isAdmin } from './layout/shell.js';
+import { initShell, mountShell, isStaff, isAdmin, getProfileCached } from './layout/shell.js';
 import { register, startRouter, navigate } from './router.js';
 import { toast } from './ui.js';
 
@@ -32,6 +32,12 @@ register('/login', () => { document.getElementById('app').innerHTML = ''; (async
 register('/signup', () => { document.getElementById('app').innerHTML=''; (async()=>{ const r=await pageSignup(); document.getElementById('app').innerHTML=r.html; if(r.mount) r.mount(); })(); return {}; });
 register('/reset-password', () => { document.getElementById('app').innerHTML=''; (async()=>{ const r=await pageReset(); document.getElementById('app').innerHTML=r.html; if(r.mount) r.mount(); })(); return {}; });
 
+register('/catalog', () => guarded(async () => {
+  const m = await import('./pages/catalog.js'); return m.render();
+}));
+register('/portal', () => guarded(async () => {
+  const m = await import('./pages/portal.js'); return m.render();
+}));
 register('/dashboard', () => guarded(async () => {
   const m = await import('./pages/dashboard.js'); return m.render();
 }));
@@ -73,11 +79,17 @@ register('/settings', () => guarded(async () => {
   const m = await import('./pages/settings.js'); return m.render();
 }));
 
-// boot
+window.addEventListener('error', (e) => { console.error(e.error); });
+window.addEventListener('unhandledrejection', (e) => { console.error(e.reason); });
 (async () => {
   const session = await getSession();
   if (!session) navigate('/login');
-  else navigate('/dashboard');
+  else {
+    await initShell(session.user);
+    const profile = getProfileCached();
+    if (profile?.role === 'customer') navigate('/portal');
+    else navigate('/dashboard');
+  }
   startRouter();
   onAuthChange((s) => {
     if (!s) navigate('/login');

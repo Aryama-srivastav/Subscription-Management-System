@@ -1,20 +1,20 @@
 :root {
-  --bg: #0f1220;
-  --bg-2: #171a2e;
-  --surface: #1e2238;
-  --surface-2: #262a45;
-  --border: #2f3356;
-  --text: #e8eaf6;
-  --muted: #9aa0c7;
-  --primary: #6c63ff;
-  --primary-2: #8b85ff;
-  --success: #3dd68c;
-  --warning: #ffb020;
-  --danger: #ff5d73;
-  --info: #4da3ff;
+  --bg: #ffffff;
+  --bg-2: #fff8e1;
+  --surface: #ffffff;
+  --surface-2: #f5efe0;
+  --border: #d7c9a8;
+  --text: #1a1a1a;
+  --muted: #5a4a3a;
+  --primary: #f5b800;
+  --primary-2: #e0a800;
+  --success: #2e7d32;
+  --warning: #e65100;
+  --danger: #c62828;
+  --info: #1565c0;
   --radius: 10px;
   --radius-sm: 6px;
-  --shadow: 0 8px 24px rgba(0,0,0,.35);
+  --shadow: 0 4px 16px rgba(0,0,0,.08);
   --font: 'Inter', system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
 }
 * { box-sizing: border-box; }
@@ -23,3 +23,4 @@ body { font-family: var(--font); background: var(--bg); color: var(--text); font
 a { color: var(--primary-2); text-decoration: none; }
 button { font-family: inherit; }
 input, select, textarea { font-family: inherit; }
+

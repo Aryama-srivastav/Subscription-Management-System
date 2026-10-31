@@ -21,7 +21,9 @@ export function isCustomer() { return profile?.role === 'customer'; }
 export function renderShell(contentHtml) {
   const role = profile?.role || 'customer';
   const links = [
-    { path: '/dashboard', label: 'Dashboard', show: true },
+    { path: '/catalog', label: 'Catalog', show: isCustomer() },
+    { path: '/portal', label: 'My portal', show: isCustomer() },
+    { path: '/dashboard', label: 'Dashboard', show: isStaff() },
     { path: '/products', label: 'Products', show: isStaff() },
     { path: '/quotations', label: 'Quotations', show: isStaff() },
     { path: '/plans', label: 'Plans', show: isStaff() },
